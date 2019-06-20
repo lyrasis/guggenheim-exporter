@@ -25,7 +25,7 @@ class EAD3Serializer < EADSerializer
     if digital_object['notes'].any?
       content = [content.chomp('.')].concat(digital_object['notes'].map { |note|
         note['content'].join(' ').strip
-      }).reject(&:empty?).join('. ').squeeze(' ').strip
+      }).reject(&:empty?).map { |n| "<p>#{n}</p>" }.join.squeeze(' ').strip
     end
 
     atts['linktitle'] = digital_object['title'] if digital_object['title']
