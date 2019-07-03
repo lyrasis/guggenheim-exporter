@@ -24,7 +24,8 @@ class EAD3Serializer < EADSerializer
     # GUGGENHEIM ADDITION: add note content to descriptivenote
     if digital_object['notes'].any?
       content = [content.chomp('.')].concat(digital_object['notes'].map { |note|
-        note['content'].join(' ').strip
+        prefix = note.key?('label') ? "#{note['label']}: ".squeeze(':') : ''
+        "#{prefix}#{note['content'].join(' ').strip}"
       }).reject(&:empty?).map { |n| "<p>#{n}</p>" }.join.squeeze(' ').strip
     end
 
